@@ -16,7 +16,7 @@
 ```bash
 git add .
 git commit -m "feat: 機能の概要"
-git push origin feat/機能名
+git push
 ```
 GitHubでPull Requestを作成し、レビュー後にdevへマージ。
 
