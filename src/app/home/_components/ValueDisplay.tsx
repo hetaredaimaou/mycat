@@ -1,3 +1,3 @@
 export const ValueDisplay = () => {
-	return <div>ValueDisplay</div>;
+  return <div>ValueDisplay</div>;
 };
