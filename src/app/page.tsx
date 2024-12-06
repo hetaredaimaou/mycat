@@ -1,3 +1,4 @@
+'use client';
 import Image from "next/image";
 import { Stage } from './components/Stage';
 import { useEffect } from "react";
@@ -15,7 +16,7 @@ export default function page() {
       redirect('/auth')
     }
   },[status])
-  
+
   return (
     <div>
     <Stage />
