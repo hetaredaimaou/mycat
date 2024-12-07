@@ -1,8 +1,10 @@
 'use client';
 import Image from "next/image";
+
 import { Stage } from './components/Stage';
 import ValueDisplay from './home/_components/ValueDisplay';
 import { Header } from "./home/_components/Header";
+
 
 
 import { useEffect } from "react";
