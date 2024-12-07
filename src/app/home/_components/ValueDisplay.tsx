@@ -1,5 +1,5 @@
 type Props = {
-  amount: number | string;
+  amount: number ;
   measure: string;
 };
 

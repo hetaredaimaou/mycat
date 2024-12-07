@@ -1,4 +1,5 @@
 import { TodayStats } from "./TodayStats";
+import Image from "next/image";
 
 type Props = {
   UserName: string;
@@ -6,7 +7,7 @@ type Props = {
   TodayCommits: number;
 };
 
-export const Sidebar = ({ ...props }: Props) => {
+export const Sidebar = ({UserName,TodayCoins,TodayCommits}: Props) => {
   return (
     <div
       style={{
@@ -65,14 +66,17 @@ export const Sidebar = ({ ...props }: Props) => {
 		  justifyContent: "center", // 垂直方向の中央揃え
         }}
       >
-        <img
-          src={`https://github.com/${props.UserName}.png`}
-          alt={`${props.UserName}'s avatar`}
+        <Image
+          src={`https://github.com/masa-massara.png`}
+          alt={`${UserName}'s avatar`}
+          width={130} // プロパティとして幅を指定
+          height={130} // プロパティとして高さを指定
           style={{
-            width: "130px",
-            height: "130px",
+            // width: "130px",
+            // height: "130px",
             borderRadius: "50%", // 円形にする
             objectFit: "cover", // 画像の比率を保ちながら領域に収める
+            zIndex:"100",
           }}
         />
         <div
@@ -82,17 +86,23 @@ export const Sidebar = ({ ...props }: Props) => {
             fontWeight: "600", // semibold (600相当)
           }}
         >
-          {props.UserName}
+          {UserName}
         </div>
         <TodayStats
           StatsName="今日の獲得コイン"
-          StatsNumber={props.TodayCoins}
+          StatsNumber={TodayCoins}
         />
         <TodayStats
           StatsName="今日のコミット数"
-          StatsNumber={props.TodayCommits}
+          StatsNumber={TodayCommits}
         />
       </div>
     </div>
   );
 };
+
+
+
+
+
+
