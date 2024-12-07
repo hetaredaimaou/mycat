@@ -1,11 +1,12 @@
-'use client';
+"use client";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
 import { Header } from "./_components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Stage } from "../components/Stage";
 import { LineAndButtons } from "../components/LineAndButtons";
+import { fetchCommits } from "../graphql/fetchCommits";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -15,19 +16,49 @@ export default function page() {
 	const { data: session, status } = useSession();
 	const [githubId, setGithubId] = useState<string | null>(null); //追加
 	const [loading, setLoading] = useState<boolean>(true); // loading 状態を追加
-    
-    
-  const Values = {
-  levelAmount: 5,
-  levelMeasure: "level",
-  coinAmount: 100,
-  coinMeasure: "coin",
-  };
-  const Side = {
-    UserName: "Amatec",
-    TodayCoins: 100,
-    TodayCommits: 200,
-  };
+
+	const [todayCommits, setTodayCommits] = useState<number | null>(null);
+	const [allContributions, setAllContributions] = useState<number>(0);
+	const [todayGetCoins, setTodayGetCoins] = useState<number>(0);
+	const [allCoins, setAllCoins] = useState<number>(0);
+
+	const githubUsername = session?.user?.name ?? "";
+
+	useEffect(() => {
+		if (githubUsername) {
+			(async () => {
+				try {
+					const todayStart = new Date();
+					todayStart.setHours(0, 0, 0, 0);
+
+					// 現在時刻を取得
+					const now = new Date();
+
+					// GitHubコミットデータを取得
+					const todayCommits = await fetchCommits({
+						userName: githubUsername,
+						fromTime: todayStart,
+						toTime: now,
+					});
+					setTodayCommits(todayCommits);
+				} catch (error) {
+					console.error("GraphQL取得エラー:", error);
+				}
+			})();
+		}
+	}, [githubUsername]);
+
+	const Values = {
+		levelAmount: 5,
+		levelMeasure: "level",
+		coinAmount: 100,
+		coinMeasure: "coin",
+	};
+	const Side = {
+		UserName: "Amatec",
+		TodayCoins: 100,
+		TodayCommits: 200,
+	};
 
 	useEffect(() => {
 		// セッションがロード中なら loading 状態を true に設定
@@ -44,11 +75,11 @@ export default function page() {
 			return;
 		}
 
-		const githubUsername = session.user.name;
-
 		async function fetchGithubUserId() {
 			try {
-				const response = await fetch(`https://api.github.com/users/${githubUsername}`);
+				const response = await fetch(
+					`https://api.github.com/users/${githubUsername}`
+				);
 				const data = await response.json();
 				if (response.ok) {
 					setGithubId(data.id);
@@ -78,7 +109,10 @@ export default function page() {
 							Github_User_ID: githubId,
 							Total_Coins: 0,
 							Total_Experience: 0,
-							Github_Username: session && session.user ? session.user.name : "",
+							Github_Username:
+								session && session.user
+									? session.user.name
+									: "",
 							Updated_At: new Date(),
 							Created_At: new Date(),
 						},
@@ -88,7 +122,7 @@ export default function page() {
 				}
 			}
 		} catch (error) {
-			console.error('データ取得エラー:', error);
+			console.error("データ取得エラー:", error);
 		}
 	}
 
@@ -99,30 +133,21 @@ export default function page() {
 
 	return (
 		<div>
-      <Header
-        levelAmount={Values.levelAmount}
-        levelMeasure="level"
-        coinAmount={Values.coinAmount}
-        coinMeasure="coin"
-      />
-      <Sidebar
-        UserName={Side.UserName}
-        TodayCoins={Side.TodayCoins}
-        TodayCommits={Side.TodayCommits}
-      />
-      <div style={{ position: "absolute", top: "121px", left: "22%" }}>
-        <LineAndButtons />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "60%",
-          left: "65%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <Stage />
-      </div>
-    </div>
+			<Header
+				levelAmount={Values.levelAmount}
+				levelMeasure="level"
+				coinAmount={Values.coinAmount}
+				coinMeasure="coin"
+			/>
+			<Sidebar
+				UserName={Side.UserName}
+				TodayCoins={Side.TodayCoins}
+				TodayCommits={Side.TodayCommits}
+			/>
+			<div style={{ position: "absolute", top: "121px", left: "22%" }}>
+				<LineAndButtons />
+			</div>
+			<Stage />
+		</div>
 	);
 }
