@@ -4,6 +4,7 @@
 import { Header } from "./_components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Stage } from "../components/Stage";
+import { LineAndButtons } from "../components/LineAndButtons";
 
 const Values = {
   levelAmount: 5,
@@ -18,37 +19,32 @@ const Side = {
 };
 
 export default function page() {
-  // const { data: session, status } = useSession();
-  // if (!session || !session.user) {
-  //   return <p>You are not signed in</p>;
-  // }
   return (
     <div>
-      <p style={{ zIndex: "-100", position: "absolute", top: "0", left: "0" }}>
-        <Header
-          levelAmount={Values.levelAmount}
-          levelMeasure='level'
-          coinAmount={Values.coinAmount}
-          coinMeasure='coin'
-        />
-      </p>
-      <p style={{ zIndex: "100" }}>
-        <Sidebar
-          UserName={Side.UserName}
-          TodayCoins={Side.TodayCoins}
-          TodayCommits={Side.TodayCommits}
-        />
-      </p>
-
-      <p
+      <Header
+        levelAmount={Values.levelAmount}
+        levelMeasure="level"
+        coinAmount={Values.coinAmount}
+        coinMeasure="coin"
+      />
+      <Sidebar
+        UserName={Side.UserName}
+        TodayCoins={Side.TodayCoins}
+        TodayCommits={Side.TodayCommits}
+      />
+      <div style={{ position: "absolute", top: "121px", left: "22%" }}>
+        <LineAndButtons />
+      </div>
+      <div
         style={{
           position: "absolute",
-          top: "400px",
-          right: "150px",
+          top: "60%",
+          left: "65%",
+          transform: "translateX(-50%)",
         }}
       >
         <Stage />
-      </p>
+      </div>
     </div>
   );
 }

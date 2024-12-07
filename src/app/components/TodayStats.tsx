@@ -7,7 +7,7 @@ export const TodayStats = ({ ...props }: Props) => {
   const displayNumber = props.StatsNumber > 9999 ? "9999+" : props.StatsNumber;
 
   return (
-    <div>
+    <div style={{ marginTop: "60px" }}>
       <div
         style={{
           fontSize: 24,
