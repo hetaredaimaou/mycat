@@ -7,8 +7,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { defaultSystem } from "@chakra-ui/react"; // これを追加
 import { Provider } from "@/components/ui/provider";
 
-
-
 const inter = Inter({ subsets: ["latin"] }); //追加
 
 const geistSans = localFont({
@@ -33,11 +31,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          <NextAuthProvider>{children}</NextAuthProvider>
+        </Provider>
       </body>
     </html>
   );
