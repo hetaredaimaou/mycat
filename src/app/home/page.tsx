@@ -35,16 +35,7 @@ export default function page() {
       <div style={{ position: "absolute", top: "121px", left: "22%" }}>
         <LineAndButtons />
       </div>
-      <div
-        style={{
-          position: "absolute",
-          top: "60%",
-          left: "65%",
-          transform: "translateX(-50%)",
-        }}
-      >
-        <Stage />
-      </div>
+      <Stage />
     </div>
   );
 }

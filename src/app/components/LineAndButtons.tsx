@@ -26,31 +26,31 @@ export const LineAndButtons = () => {
       <Image
         src="/home.png"
         alt="Home Image"
-        width={65}
-        height={65}
-        style={{ marginTop: "20px", marginBottom: "20px", cursor: "pointer" }}
+        width={75}
+        height={75}
+        style={{ marginTop: "40px", marginBottom: "40px", cursor: "pointer" }}
         onClick={() => handleNavigation("/home")}
       />
       <Image
         src="/chenge.png"
         alt="Chenge Image"
-        width={65}
-        height={65}
-        style={{ marginBottom: "20px", cursor: "pointer" }}
+        width={75}
+        height={75}
+        style={{ marginBottom: "40px", cursor: "pointer" }}
         onClick={() => handleNavigation("/store")}
       />
       <Image
         src="/oppthion.png"
         alt="Opption Image"
-        width={65}
-        height={65}
-        style={{ marginBottom: "20px", cursor: "pointer" }}
+        width={75}
+        height={75}
+        style={{ marginBottom: "40px", cursor: "pointer" }}
       />
       <Image
         src="/reload.png"
         alt="Reload Image"
-        width={65}
-        height={65}
+        width={75}
+        height={75}
         style={{ cursor: "pointer" }}
         onClick={handleReload} // 再読み込み処理を実行
       />

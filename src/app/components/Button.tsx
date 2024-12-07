@@ -9,6 +9,7 @@ export const Button = ({ onClick, label, buttonColor }: Props) => {
   return (
     <button
       style={{
+        position:"absolute",
         backgroundColor: buttonColor,
         width: "350px",
         height: "100px",
