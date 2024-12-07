@@ -101,22 +101,28 @@ export type Database = {
       }
       Users: {
         Row: {
+          Created_At: string | null
           Github_User_ID: number
           Github_Username: string
           Total_Coins: number
           Total_Experience: number | null
+          Updated_At: string | null
         }
         Insert: {
+          Created_At?: string | null
           Github_User_ID: number
           Github_Username: string
           Total_Coins?: number
           Total_Experience?: number | null
+          Updated_At?: string | null
         }
         Update: {
+          Created_At?: string | null
           Github_User_ID?: number
           Github_Username?: string
           Total_Coins?: number
           Total_Experience?: number | null
+          Updated_At?: string | null
         }
         Relationships: []
       }
