@@ -23,6 +23,7 @@ export const Header = ({
         borderTopRightRadius: "100px",
         borderBottomRightRadius: "100px",
         position: "relative",
+        zIndex: -2,
       }}
     >
       <div
@@ -42,15 +43,15 @@ export const Header = ({
         }}
       >
         <Image
-          src='/level2.png'
-          alt='Level Icon'
+          src="/level2.png"
+          alt="Level Icon"
           width={76} // ここにピクセル単位でサイズを指定
           height={60} // ここにピクセル単位でサイズを指定
         />
         <ValueDisplay amount={levelAmount} measure={levelMeasure} />
         <Image
-          src='/coin.png'
-          alt='Coin Icon'
+          src="/coin.png"
+          alt="Coin Icon"
           width={80} // ここにピクセル単位でサイズを指定
           height={60} // ここにピクセル単位でサイズを指定
         />
