@@ -1,5 +1,6 @@
 'use client';
 import {signIn,signOut,useSession} from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function page() {
 	const {data:session,status} = useSession();
@@ -7,7 +8,7 @@ export default function page() {
 		return <p>You are not signed in</p>;
 	  }
 	return <div>
-		 <button onClick={()=>{signOut()}}>Sign Out</button>
+		 <button onClick={()=>{signOut({callbackUrl:"http://localhost:3000"})}}>Sign Out</button>
 		 <button onClick={()=>{signIn(undefined,{callbackUrl:'http://localhost:3000/auth'})}}>Sing In</button>
 		 name:{session.user.name ||""} <br />
           image:
