@@ -1,8 +1,11 @@
 'use client';
 import Image from "next/image";
-import { Stage } from "./components/Stage";
-import ValueDisplay from "./home/_components/ValueDisplay";
-import { LineAndButtons } from "./components/LineAndButtons";
+
+import { Stage } from './components/Stage';
+import ValueDisplay from './home/_components/ValueDisplay';
+import { Header } from "./home/_components/Header";
+
+
 
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -25,8 +28,9 @@ export default function page() {
 
   return (
     <div>
-      <LineAndButtons />
-      <Stage />
+    <Stage />
+    <ValueDisplay amount="9999+" measure="coin" />
+    <Header/>
     </div>
   );
 }
