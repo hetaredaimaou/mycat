@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image";
 import { Stage } from './components/Stage';
+
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { redirect } from 'next/navigation';
@@ -17,9 +18,13 @@ export default function page() {
     }
   },[status])
 
+
+
+
   return (
     <div>
     <Stage />
+    <ValueDisplay amount="9999+" measure="coin" />
     </div>
   );
 }
