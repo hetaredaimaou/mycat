@@ -7,11 +7,11 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 
-export async function fetchItem() {
+export async function fetchGithubId() {
     try {
         const { data, error } = await supabase
-            .from("Decoration_Items")
-            .select("*");
+            .from("Users")
+            .select("Github_User_ID")
 
         if (error) {
             throw error;
