@@ -1,3 +1,8 @@
+import { PartSelector } from "./_components/PartSelector";
 export default function page() {
-	return <h1>Store</h1>;
+  return (
+    <div>
+      <PartSelector />
+    </div>
+  );
 }

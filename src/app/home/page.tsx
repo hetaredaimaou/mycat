@@ -2,6 +2,10 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
+import { Header } from "./_components/Header";
+import { Sidebar } from "../components/Sidebar";
+import { Stage } from "../components/Stage";
+import { LineAndButtons } from "../components/LineAndButtons";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -11,6 +15,19 @@ export default function page() {
 	const { data: session, status } = useSession();
 	const [githubId, setGithubId] = useState<string | null>(null); //追加
 	const [loading, setLoading] = useState<boolean>(true); // loading 状態を追加
+    
+    
+  const Values = {
+  levelAmount: 5,
+  levelMeasure: "level",
+  coinAmount: 100,
+  coinMeasure: "coin",
+  };
+  const Side = {
+    UserName: "Amatec",
+    TodayCoins: 100,
+    TodayCommits: 200,
+  };
 
 	useEffect(() => {
 		// セッションがロード中なら loading 状態を true に設定
@@ -82,20 +99,30 @@ export default function page() {
 
 	return (
 		<div>
-			<button onClick={() => { signOut({ callbackUrl: "http://localhost:3000" }) }}>Sign Out</button>
-			<button onClick={() => { signIn(undefined, { callbackUrl: 'http://localhost:3000/auth' }) }}>Sign In</button>
-			<div>
-				name: {session && session.user ? session.user.name : ""}
-				<br />
-				image:
-				<img
-					src={session?.user?.image || ""}
-					alt="icon"
-					style={{ width: "100px", height: "100px" }}
-				/>
-			</div>
-			<br />
-			Home
-		</div>
+      <Header
+        levelAmount={Values.levelAmount}
+        levelMeasure="level"
+        coinAmount={Values.coinAmount}
+        coinMeasure="coin"
+      />
+      <Sidebar
+        UserName={Side.UserName}
+        TodayCoins={Side.TodayCoins}
+        TodayCommits={Side.TodayCommits}
+      />
+      <div style={{ position: "absolute", top: "121px", left: "22%" }}>
+        <LineAndButtons />
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: "60%",
+          left: "65%",
+          transform: "translateX(-50%)",
+        }}
+      >
+        <Stage />
+      </div>
+    </div>
 	);
 }
