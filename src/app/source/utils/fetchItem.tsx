@@ -1,25 +1,23 @@
-'use client';
-
-import { useState, useEffect } from "react";
+import { Database } from '@/types/supabasetype';
 import { createClient } from '@supabase/supabase-js';
 
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 
-export async function fetchItem(){
-    try{
+export async function fetchItem() {
+    try {
         const { data, error } = await supabase
             .from("Decoration_Items")
             .select("*");
 
-        if (error){
+        if (error) {
             throw error;
         }
         return data || []
-    }catch(error){
-        console.log("取得エラー",error)
+    } catch (error) {
+        console.log("取得エラー", error)
     }
 }
