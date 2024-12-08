@@ -7,6 +7,10 @@ import { HStack } from "@chakra-ui/react";
 // import { Button } from "@/components/ui/button";
 import { Button } from "@chakra-ui/react";
 // import { signIn, signOut, useSession } from "next-auth/react";
+// import { coinLogic } from "../source/utils/getMyCoin";
+import { Database } from '@/types/supabasetype';
+import { createClient } from '@supabase/supabase-js';
+import { useEffect,useState } from "react";
 
 import {
   DialogBody,
@@ -17,11 +21,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useSession } from "next-auth/react";
 
-const userName = "ゲストユーザー";
-const imageIcon = "/oppthion.png";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = createClient<Database>(supabaseUrl, supabaseKey);
+// const {data,session} = useSession();
+
+// const userName = session.user.name;
+// const imageIcon = "/oppthion.png";
 
 export const LineAndButtons = () => {
+  const {data: session} = useSession();
+
+const userName = session?.user?.name;
+// const imageIcon = "/oppthion.png";
+  
   const router = useRouter();
 
   const handleNavigation = (path: string) => {
@@ -31,6 +46,13 @@ export const LineAndButtons = () => {
   const handleReload = () => {
     router.refresh(); // 現在のページを再読み込み
   };
+  const [imageIcon, setImageIcon] = useState("");
+  useEffect(() => {
+    if (session && session.user) {
+      
+      setImageIcon(`https://github.com/${session.user.name}.png`);
+    }
+  }, [session]);
 
   return (
     <div
@@ -60,7 +82,7 @@ export const LineAndButtons = () => {
       <div style={{ marginBottom: "40px" }}>
         <DialogRoot size={"xs"}>
           <DialogTrigger asChild>
-            <Image src={imageIcon} alt="Reload Image" width={75} height={75} />
+            <Image src={"/oppthion.png"} alt="Reload Image" width={75} height={75} />
           </DialogTrigger>
           <DialogContent>
             <DialogCloseTrigger
