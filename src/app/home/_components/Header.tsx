@@ -23,7 +23,7 @@ export const Header = ({
         borderTopRightRadius: "100px",
         borderBottomRightRadius: "100px",
         position: "relative",
-        zIndex: -2,
+        zIndex: 500,
       }}
     >
       <div
