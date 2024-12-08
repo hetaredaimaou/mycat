@@ -24,7 +24,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 const supabase = createClient<Database>(supabaseUrl, supabaseKey);
 
 // 自分のコインを取得する関数
-export async function coinLogic(githubUserId: string) {
+export async function coinLogic(githubUserId: string): Promise<number> {
   console.log("hogeS");
 
   try {
@@ -33,9 +33,11 @@ export async function coinLogic(githubUserId: string) {
       .from("Users")
       .select("*")
       .eq("Github_User_ID", githubUserId);
+
+    if (!user) return 0;
+    return user[0].Total_Coins;
   } catch (err) {
     console.error("例外が発生しました:", err);
+    return 0;
   }
 }
-
-
