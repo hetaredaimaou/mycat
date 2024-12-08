@@ -4,6 +4,7 @@ import { Sidebar } from "../components/Sidebar";
 import { Stage } from "../components/Stage";
 import { LineAndButtons } from "../components/LineAndButtons";
 import { PartSelector } from "./_components/PartSelector";
+import { Character } from "../components/Character";
 
 const Values = {
   levelAmount: 5,
@@ -35,6 +36,7 @@ export default function page() {
         <LineAndButtons />
       </div>
       <Stage />
+      <Character />
       <PartSelector />
     </div>
   );
