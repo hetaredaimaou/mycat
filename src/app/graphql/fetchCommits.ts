@@ -3,8 +3,8 @@ import { client } from "./client";
 
 type Props = {
 	userName: string;
-	fromTime: Date;
-	toTime: Date;
+	fromTime: string;
+	toTime: string;
 };
 
 export const fetchCommits = async ({
@@ -24,8 +24,8 @@ export const fetchCommits = async ({
 		`,
 		variables: {
 			username: userName,
-			from: fromTime.toISOString(), // Date型をISO8601形式に変換
-			to: toTime.toISOString(), // Date型をISO8601形式に変換
+			from: fromTime, // Date型をISO8601形式に変換
+			to: toTime, // Date型をISO8601形式に変換
 		},
 	});
 	return data.user.contributionsCollection.totalCommitContributions;

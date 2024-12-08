@@ -7,8 +7,8 @@ export async function fetchGithubId(githubUsername: string): Promise<string> {
 		const response = await fetch(
 			`https://api.github.com/users/${githubUsername}`
 		);
-		const data: string = await response.json();
-		return data;
+		const data = await response.json();
+		return data.id;
 	} catch (error) {
 		console.log(error);
 		throw error;

@@ -12,6 +12,7 @@ import { supabase } from "@/supabase/supabase.config";
 import { fetchGithubId } from "../source/utils/fetchgithubId";
 import { fetchMyCoins } from "../source/utils/fetchMyCoins";
 import { fetchMyLevels } from "../source/utils/fetchMyLevels";
+import { getFromTime } from "../source/utils/getFromTime";
 
 export default function page() {
 	const { data: session, status } = useSession();
@@ -40,13 +41,28 @@ export default function page() {
 					const levels = await fetchMyLevels(id);
 					setLevels(levels);
 				}
+
+				const fromTime = await getFromTime(id);
+				console.log("👩‍👩‍👧‍👦", fromTime);
+
+				const toTime = new Date().toISOString();
+				const recentCommits = await fetchCommits({
+					userName: githubUsername,
+					fromTime: fromTime,
+					toTime: toTime,
+				});
+
+				const prevCommits = await fetchMyLevels(id);
+				const commits = recentCommits + prevCommits;
+
+				setTodayCommits(commits); // 必要に応じてコミット数を状態に保存
 			} catch (error) {
 				console.error("データ取得中のエラー:", error);
 			}
 		};
-
 		fetchData();
 	}, [githubUsername]);
+
 	useEffect(() => {
 		if (githubUsername) {
 			(async () => {
@@ -60,8 +76,8 @@ export default function page() {
 					// GitHubコミットデータを取得
 					const todayCommits = await fetchCommits({
 						userName: githubUsername,
-						fromTime: todayStart,
-						toTime: now,
+						fromTime: todayStart.toISOString(),
+						toTime: now.toISOString(),
 					});
 					setTodayCommits(todayCommits);
 				} catch (error) {
