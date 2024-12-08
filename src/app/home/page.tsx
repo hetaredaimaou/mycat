@@ -55,7 +55,7 @@ export default function page() {
 				const prevCommits = await fetchMyLevels(id);
 				const commits = recentCommits + prevCommits;
 
-				setTodayCommits(commits); // 必要に応じてコミット数を状態に保存
+				setCoins(commits); // 必要に応じてコミット数を状態に保存
 			} catch (error) {
 				console.error("データ取得中のエラー:", error);
 			}
@@ -155,7 +155,7 @@ export default function page() {
 	return (
 		<div>
 			<Header
-				levelAmount={levels}
+				levelAmount={coins}
 				levelMeasure="level"
 				coinAmount={coins}
 				coinMeasure="coin"
