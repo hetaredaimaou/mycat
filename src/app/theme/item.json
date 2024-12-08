@@ -3,7 +3,7 @@
 		"iD": 1,
 		"Name": "redcap",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/redcap.png",
-		"Price": 100,
+		"Price": 3,
 		"Part": "head",
 		"is_Purchased": true
 	},
@@ -11,7 +11,7 @@
 		"iD": 2,
 		"Name": "bluecap",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/bluecap.png",
-		"Price": 100,
+		"Price": 3,
 		"Part": "head",
 		"is_Purchased": true
 	},
@@ -19,7 +19,7 @@
 		"iD": 3,
 		"Name": "greencap",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/greencap.png",
-		"Price": 100,
+		"Price": 3,
 		"Part": "head",
 		"is_Purchased": true
 	},
@@ -27,7 +27,7 @@
 		"iD": 4,
 		"Name": "yellowcap",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/yellowcap.png",
-		"Price": 100,
+		"Price": 3,
 		"Part": "head",
 		"is_Purchased": true
 	},
@@ -35,7 +35,7 @@
 		"iD": 5,
 		"Name": "head1",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/head1.png",
-		"Price": 100,
+		"Price": 5,
 		"Part": "head",
 		"is_Purchased": true
 	},
@@ -43,7 +43,7 @@
 		"iD": 6,
 		"Name": "bunnycap",
 		"Category": "https://ndbuhmebytxcjbpjuuxn.supabase.co/storage/v1/object/public/items/bunnycap.png",
-		"Price": 100,
+		"Price": 10,
 		"Part": "head",
 		"is_Purchased": true
 	}
