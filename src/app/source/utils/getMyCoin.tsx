@@ -33,18 +33,9 @@ export async function coinLogic(githubUserId: string) {
       .from("Users")
       .select("*")
       .eq("Github_User_ID", githubUserId);
-    // .textSearch("Github_User_ID","Total-Coins")
-    console.log("coin", await user);
-    console.log("id", githubUserId);
-    console.log(user[0].Total_Coins);
   } catch (err) {
     console.error("例外が発生しました:", err);
   }
 }
 
-// コインを減らす関数
-export async function reduceCoins (githubUserId: string):number {
-  const myCoin:any = await coinLogic(githubUserId);
-  const newTotal = myCoin - 2;
-  console.log(reduceCoins());
-}
+
