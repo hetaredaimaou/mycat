@@ -9,6 +9,10 @@ import { LineAndButtons } from "../components/LineAndButtons";
 import { fetchCommits } from "../graphql/fetchCommits";
 import { Character } from "../components/Character";
 import { supabase } from "@/supabase/supabase.config";
+import { fetchGithubId } from "../source/utils/fetchgithubId";
+import { fetchMyCoins } from "../source/utils/fetchMyCoins";
+import { fetchMyLevels } from "../source/utils/fetchMyLevels";
+import { getFromTime } from "../source/utils/getFromTime";
 
 export default function page() {
 	const { data: session, status } = useSession();
@@ -16,11 +20,48 @@ export default function page() {
 	const [loading, setLoading] = useState<boolean>(true); // loading 状態を追加
 
 	const [todayCommits, setTodayCommits] = useState<number | null>(null);
-	const [allContributions, setAllContributions] = useState<number>(0);
+	const [levels, setLevels] = useState<number>(0);
 	const [todayGetCoins, setTodayGetCoins] = useState<number>(0);
-	const [allCoins, setAllCoins] = useState<number>(0);
+	const [coins, setCoins] = useState<number>(0);
 
 	const githubUsername = session?.user?.name ?? "";
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				if (!githubUsername) return;
+
+				const id = await fetchGithubId(githubUsername);
+				setGithubId(id);
+
+				if (id) {
+					const coins = await fetchMyCoins(id);
+					setCoins(coins);
+
+					const levels = await fetchMyLevels(id);
+					setLevels(levels);
+				}
+
+				const fromTime = await getFromTime(id);
+				console.log("👩‍👩‍👧‍👦", fromTime);
+
+				const toTime = new Date().toISOString();
+				const recentCommits = await fetchCommits({
+					userName: githubUsername,
+					fromTime: fromTime,
+					toTime: toTime,
+				});
+
+				const prevCommits = await fetchMyLevels(id);
+				const commits = recentCommits + prevCommits;
+
+				setTodayCommits(commits); // 必要に応じてコミット数を状態に保存
+			} catch (error) {
+				console.error("データ取得中のエラー:", error);
+			}
+		};
+		fetchData();
+	}, [githubUsername]);
 
 	useEffect(() => {
 		if (githubUsername) {
@@ -35,8 +76,8 @@ export default function page() {
 					// GitHubコミットデータを取得
 					const todayCommits = await fetchCommits({
 						userName: githubUsername,
-						fromTime: todayStart,
-						toTime: now,
+						fromTime: todayStart.toISOString(),
+						toTime: now.toISOString(),
 					});
 					setTodayCommits(todayCommits);
 				} catch (error) {
@@ -45,18 +86,6 @@ export default function page() {
 			})();
 		}
 	}, [githubUsername]);
-
-	const Values = {
-		levelAmount: 5,
-		levelMeasure: "level",
-		coinAmount: 100,
-		coinMeasure: "coin",
-	};
-	const Side = {
-		UserName: "Amatec",
-		TodayCoins: 100,
-		TodayCommits: 200,
-	};
 
 	useEffect(() => {
 		// セッションがロード中なら loading 状態を true に設定
@@ -104,20 +133,14 @@ export default function page() {
 					.from("Users")
 					.insert([
 						{
-							Github_User_ID: githubId,
+							Github_User_ID: parseInt(githubId), // githubIdを数値に変換
 							Total_Coins: 0,
 							Total_Experience: 0,
-							Github_Username:
-								session && session.user
-									? session.user.name
-									: "",
-							Updated_At: new Date(),
-							Created_At: new Date(),
+							Github_Username: session?.user?.name || "", // オプショナルチェイニングを使用
+							Updated_At: new Date().toISOString(), // ISO形式に変換
+							Created_At: new Date().toISOString(), // ISO形式に変換
 						},
 					]);
-				if (insertError) {
-					console.log("データ挿入エラー", insertError);
-				}
 			}
 		} catch (error) {
 			console.error("データ取得エラー:", error);
@@ -132,15 +155,15 @@ export default function page() {
 	return (
 		<div>
 			<Header
-				levelAmount={Values.levelAmount}
+				levelAmount={levels}
 				levelMeasure="level"
-				coinAmount={Values.coinAmount}
+				coinAmount={coins}
 				coinMeasure="coin"
 			/>
 			<Sidebar
-				UserName={Side.UserName}
-				TodayCoins={Side.TodayCoins}
-				TodayCommits={Side.TodayCommits}
+				UserName={githubUsername}
+				TodayCoins={todayCommits ?? 0}
+				TodayCommits={todayCommits ?? 0}
 			/>
 			<div style={{ position: "absolute", top: "121px", left: "22%" }}>
 				<LineAndButtons />
