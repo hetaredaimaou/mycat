@@ -23,7 +23,7 @@ export const Sidebar = ({ UserName, TodayCoins, TodayCommits }: Props) => {
           position: "absolute", // 親要素を基準に配置
           top: "0",
           left: "0",
-          zIndex: -1,
+          zIndex: 10,
         }}
       >
         <div
@@ -61,6 +61,8 @@ export const Sidebar = ({ UserName, TodayCoins, TodayCommits }: Props) => {
           width: "100%",
           height: "100%",
           textAlign: "center",
+          position: "relative", // 必要
+          zIndex: 100,
         }}
       >
         <Image
